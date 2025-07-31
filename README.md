@@ -41,7 +41,7 @@
 **2. Deploy with One Command:**
 ```bash
 # Clone and deploy
-git clone https://github.com/admindev-buildwellai/Runpod-Webagent.git
+git clone https://github.com/badr-buildwellai/Runpod-Webagent.git
 cd Runpod-Webagent
 ./setup_and_run.sh
 ```
@@ -57,7 +57,7 @@ The script will:
 
 ```bash
 # Standard setup
-git clone https://github.com/admindev-buildwellai/Runpod-Webagent.git
+git clone https://github.com/badr-buildwellai/Runpod-Webagent.git
 cd Runpod-Webagent
 ./setup_and_run.sh
 
@@ -266,7 +266,7 @@ This fork focuses on improved deployment and RunPod compatibility. Contributions
 - Documentation enhancements
 - Bug fixes and performance improvements
 
-**Repository**: [https://github.com/admindev-buildwellai/Runpod-Webagent](https://github.com/admindev-buildwellai/Runpod-Webagent)
+**Repository**: [https://github.com/badr-buildwellai/Runpod-Webagent](https://github.com/badr-buildwellai/Runpod-Webagent)
 
 ## 📄 License
 

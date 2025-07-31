@@ -24,7 +24,7 @@
 ssh root@<your-pod-ip>
 
 # Clone the RunPod-optimized WebAgent repository
-git clone https://github.com/admindev-buildwellai/Runpod-Webagent.git
+git clone https://github.com/badr-buildwellai/Runpod-Webagent.git
 cd Runpod-Webagent
 
 # Run the automated setup (handles everything)
@@ -296,7 +296,7 @@ pip install -r requirements.txt --upgrade
 
 1. **Check our troubleshooting**: `./DEPLOYMENT_GUIDE.md`
 2. **RunPod Discord**: [discord.gg/runpod](https://discord.gg/runpod)
-3. **GitHub Issues**: [Create issue](https://github.com/admindev-buildwellai/Runpod-Webagent/issues)
+3. **GitHub Issues**: [Create issue](https://github.com/badr-buildwellai/Runpod-Webagent/issues)
 
 ### Monitoring
 
@@ -326,4 +326,4 @@ tar -xzf webagent-backup.tar.gz
 
 ---
 
-**🎉 You're ready to run WebAgent on RunPod! For support, check our [main README](../README.md) or create an [issue](https://github.com/admindev-buildwellai/Runpod-Webagent/issues).**
+**🎉 You're ready to run WebAgent on RunPod! For support, check our [main README](../README.md) or create an [issue](https://github.com/badr-buildwellai/Runpod-Webagent/issues).**

@@ -2,7 +2,7 @@
 
 ## Repository Details
 
-**Repository URL**: `https://github.com/admindev-buildwellai/Runpod-Webagent`
+**Repository URL**: `https://github.com/badr-buildwellai/Runpod-Webagent`
 
 ### 📝 Recommended Repository Description
 
@@ -114,7 +114,7 @@ For repository homepage, emphasize these commands:
 
 ```bash
 # One-line RunPod deployment
-git clone https://github.com/admindev-buildwellai/Runpod-Webagent.git && cd Runpod-Webagent && ./setup_and_run.sh
+git clone https://github.com/badr-buildwellai/Runpod-Webagent.git && cd Runpod-Webagent && ./setup_and_run.sh
 
 # Check GPU compatibility
 ./runpod_deploy.sh recommendations

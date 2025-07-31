@@ -1,6 +1,6 @@
 # 📦 RunPod WebAgent Upload Package for GitHub
 
-## Files to Upload to `https://github.com/admindev-buildwellai/Runpod-Webagent`
+## Files to Upload to `https://github.com/badr-buildwellai/Runpod-Webagent`
 
 ### 🔄 Updated Files (Replace existing)
 
@@ -46,7 +46,7 @@ Create `docs/` folder and upload:
 
 ### Option 1: GitHub Web Interface
 
-1. **Navigate to your repository**: `https://github.com/admindev-buildwellai/Runpod-Webagent`
+1. **Navigate to your repository**: `https://github.com/badr-buildwellai/Runpod-Webagent`
 2. **Upload files**:
    - Click "Add file" → "Upload files"
    - Drag and drop the files listed above
@@ -56,7 +56,7 @@ Create `docs/` folder and upload:
 
 ```bash
 # Clone your repository
-git clone https://github.com/admindev-buildwellai/Runpod-Webagent.git
+git clone https://github.com/badr-buildwellai/Runpod-Webagent.git
 cd Runpod-Webagent
 
 # Copy files from this workspace
@@ -89,7 +89,7 @@ git push origin main
 ```bash
 # Install GitHub CLI if not available
 # Then clone and upload
-gh repo clone admindev-buildwellai/Runpod-Webagent
+gh repo clone badr-buildwellai/Runpod-Webagent
 cd Runpod-Webagent
 
 # Copy files and push
