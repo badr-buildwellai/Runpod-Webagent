@@ -152,6 +152,9 @@ deploy_webdancer() {
     # Update WebDancer configuration to use correct port
     update_webdancer_config $PORT
     
+    # Check API keys configuration
+    check_runpod_secrets
+    
     echo "✅ Deployment complete!"
     echo "💡 You can now run the WebDancer demo with: bash WebDancer/scripts/run_demo.sh"
 }
@@ -167,6 +170,63 @@ update_webdancer_config() {
         sed -i "s/'model_server': 'http:\/\/127\.0\.0\.1:[0-9]*\/v1'/'model_server': 'http:\/\/127.0.0.1:$port\/v1'/g" "$config_file"
         echo "✅ Updated WebDancer configuration to use port $port"
     fi
+}
+
+# Function to check RunPod secrets and API keys
+check_runpod_secrets() {
+    echo ""
+    echo "🔑 Checking API key configuration..."
+    
+    # Check RunPod global variables (secrets) first
+    runpod_secrets_found=false
+    if [ -n "$GOOGLE_SEARCH_KEY" ] || [ -n "$JINA_API_KEY" ] || [ -n "$DASHSCOPE_API_KEY" ]; then
+        echo "✅ Found RunPod global variables (secrets)"
+        runpod_secrets_found=true
+        
+        echo "   GOOGLE_SEARCH_KEY: $([ -n "$GOOGLE_SEARCH_KEY" ] && echo "✅ Set" || echo "❌ Missing")"
+        echo "   JINA_API_KEY: $([ -n "$JINA_API_KEY" ] && echo "✅ Set" || echo "❌ Missing")"  
+        echo "   DASHSCOPE_API_KEY: $([ -n "$DASHSCOPE_API_KEY" ] && echo "✅ Set" || echo "❌ Missing")"
+    fi
+    
+    # Check .env file
+    if [ -f ".env" ]; then
+        echo "✅ Found .env file as fallback"
+        if [ "$runpod_secrets_found" = true ]; then
+            echo "   (RunPod secrets take priority over .env file)"
+        fi
+    fi
+    
+    # If no configuration found, show setup instructions
+    if [ "$runpod_secrets_found" = false ] && [ ! -f ".env" ]; then
+        echo ""
+        echo "⚠️  No API keys configured!"
+        echo ""
+        echo "🔧 RUNPOD SETUP (Recommended):"
+        echo "   Add these as environment variables in your RunPod template:"
+        echo "   - GOOGLE_SEARCH_KEY=your_serper_key    # Get from https://serper.dev/"
+        echo "   - JINA_API_KEY=your_jina_key          # Get from https://jina.ai/api-dashboard/"
+        echo "   - DASHSCOPE_API_KEY=your_dashscope_key # Get from https://dashscope.aliyun.com/"
+        echo ""
+        echo "📁 ALTERNATIVE: Create .env file"
+        echo "   cp .env.example .env && nano .env"
+        echo ""
+        echo "💡 RunPod global variables are automatically available to all pods"
+        echo "   and are more secure than .env files"
+    elif [ "$runpod_secrets_found" = true ]; then
+        # Count missing keys
+        missing_count=0
+        [ -z "$GOOGLE_SEARCH_KEY" ] && ((missing_count++))
+        [ -z "$JINA_API_KEY" ] && ((missing_count++))
+        [ -z "$DASHSCOPE_API_KEY" ] && ((missing_count++))
+        
+        if [ $missing_count -gt 0 ]; then
+            echo "⚠️  $missing_count API key(s) missing - some features may not work"
+            echo "💡 Add missing keys as RunPod global variables for full functionality"
+        else
+            echo "🎉 All API keys configured! WebDancer is ready for full functionality"
+        fi
+    fi
+    echo ""
 }
 
 # RunPod GPU Recommendations

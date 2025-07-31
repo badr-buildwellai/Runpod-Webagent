@@ -15,6 +15,11 @@
    Template: PyTorch 2.0+ (or Ubuntu + CUDA)
    Storage: 100GB+ (for model files)
    Ports: 7860, 30000 (for WebDancer demo and API)
+   
+   Environment Variables (RECOMMENDED):
+   - GOOGLE_SEARCH_KEY=your_serper_key
+   - JINA_API_KEY=your_jina_key  
+   - DASHSCOPE_API_KEY=your_dashscope_key
    ```
 
 ### Step 2: Connect and Deploy

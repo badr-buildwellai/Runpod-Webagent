@@ -126,10 +126,24 @@ cd WebDancer/scripts && bash run_demo.sh
 
 ## 🔧 Advanced Configuration
 
-### Environment Variables (.env)
+### Environment Variables
+
+**🏆 RECOMMENDED: RunPod Global Variables (Secrets)**
+
+Add these environment variables in your RunPod template:
+```bash
+GOOGLE_SEARCH_KEY=your_serper_key        # Get from https://serper.dev/
+JINA_API_KEY=your_jina_key              # Get from https://jina.ai/api-dashboard/
+DASHSCOPE_API_KEY=your_dashscope_key    # Get from https://dashscope.aliyun.com/
+```
+
+**📁 ALTERNATIVE: .env File**
 
 ```bash
-# Search API Keys
+# Copy .env.example to .env and edit
+cp .env.example .env
+
+# Search API Keys  
 GOOGLE_SEARCH_KEY=your_serper_key        # Get from https://serper.dev/
 JINA_API_KEY=your_jina_key              # Get from https://jina.ai/api-dashboard/
 DASHSCOPE_API_KEY=your_dashscope_key    # Get from https://dashscope.aliyun.com/
@@ -137,6 +151,8 @@ DASHSCOPE_API_KEY=your_dashscope_key    # Get from https://dashscope.aliyun.com/
 # Optional: Custom model server port
 WEBDANCER_PORT=30000
 ```
+
+**💡 RunPod secrets are automatically loaded and take priority over .env files**
 
 ### GPU Memory Optimization
 

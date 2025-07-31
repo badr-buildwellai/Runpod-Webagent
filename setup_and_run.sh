@@ -91,12 +91,55 @@ fi
 echo ""
 echo "✅ Setup complete!"
 echo ""
-echo "🔑 Before running the demo, you need to set up API keys:"
-echo "   1. Copy .env.example to .env: cp .env.example .env"
-echo "   2. Edit .env and add your API keys:"
-echo "      - GOOGLE_SEARCH_KEY from https://serper.dev/"
-echo "      - JINA_API_KEY from https://jina.ai/api-dashboard/"
-echo "      - DASHSCOPE_API_KEY from https://dashscope.aliyun.com/"
+
+# Check for API keys configuration
+check_api_keys() {
+    echo "🔑 Checking API key configuration..."
+    
+    # Check RunPod global variables (secrets) first
+    runpod_secrets_found=false
+    if [ -n "$GOOGLE_SEARCH_KEY" ] || [ -n "$JINA_API_KEY" ] || [ -n "$DASHSCOPE_API_KEY" ]; then
+        echo "✅ Found RunPod global variables (secrets)"
+        runpod_secrets_found=true
+        
+        echo "   GOOGLE_SEARCH_KEY: $([ -n "$GOOGLE_SEARCH_KEY" ] && echo "✅ Set" || echo "❌ Missing")"
+        echo "   JINA_API_KEY: $([ -n "$JINA_API_KEY" ] && echo "✅ Set" || echo "❌ Missing")"  
+        echo "   DASHSCOPE_API_KEY: $([ -n "$DASHSCOPE_API_KEY" ] && echo "✅ Set" || echo "❌ Missing")"
+    fi
+    
+    # Check .env file
+    if [ -f ".env" ]; then
+        echo "✅ Found .env file"
+        if [ "$runpod_secrets_found" = true ]; then
+            echo "   (RunPod secrets take priority over .env file)"
+        fi
+    else
+        echo "❌ No .env file found"
+    fi
+    
+    # If no configuration found, show setup instructions
+    if [ "$runpod_secrets_found" = false ] && [ ! -f ".env" ]; then
+        echo ""
+        echo "🔧 API Key Setup Options:"
+        echo ""
+        echo "🏆 RECOMMENDED: Use RunPod Global Variables (Secrets)"
+        echo "   In your RunPod template, add these environment variables:"
+        echo "   - GOOGLE_SEARCH_KEY=your_serper_key"
+        echo "   - JINA_API_KEY=your_jina_key" 
+        echo "   - DASHSCOPE_API_KEY=your_dashscope_key"
+        echo ""
+        echo "📁 ALTERNATIVE: Use .env file"
+        echo "   1. Copy .env.example to .env: cp .env.example .env"
+        echo "   2. Edit .env and add your API keys:"
+        echo "      - GOOGLE_SEARCH_KEY from https://serper.dev/"
+        echo "      - JINA_API_KEY from https://jina.ai/api-dashboard/"
+        echo "      - DASHSCOPE_API_KEY from https://dashscope.aliyun.com/"
+        echo ""
+        echo "💡 RunPod secrets are more secure and persistent across pod restarts"
+    fi
+}
+
+check_api_keys
 echo ""
 echo "🎯 To run the WebDancer demo:"
 echo "   source webagent_env/bin/activate"
