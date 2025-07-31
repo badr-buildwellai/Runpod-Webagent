@@ -152,11 +152,69 @@ echo "   cd WebWalker/src"
 echo "   python app.py"
 echo ""
 
-# Ask if user wants to run the demo now
-read -p "🚀 Do you want to run the WebDancer demo now? (y/N): " -n 1 -r
+# Ask if user wants to deploy and run everything now
+echo "🎯 Deployment Options:"
+echo "   1. Full deployment (model server + demo) - Recommended"
+echo "   2. Demo only (requires model server running separately)"
+echo "   3. Setup only (no deployment)"
+echo ""
+read -p "Choose option [1-3] (default: 1): " -n 1 -r
 echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    echo "🎯 Starting WebDancer demo..."
-    cd WebDancer/scripts
-    bash run_demo.sh
-fi
+
+REPLY=${REPLY:-1}
+
+case $REPLY in
+    1)
+        echo "🚀 Starting full deployment (model server + demo)..."
+        echo ""
+        
+        # Deploy model server in background
+        echo "📡 Deploying model server..."
+        ./runpod_deploy.sh deploy &
+        MODEL_SERVER_PID=$!
+        
+        # Wait for model server to be ready
+        echo "⏳ Waiting for model server to be ready..."
+        for i in {1..30}; do
+            if curl -s http://localhost:30000/health >/dev/null 2>&1; then
+                echo "✅ Model server is ready!"
+                break
+            fi
+            if [ $i -eq 30 ]; then
+                echo "⚠️  Model server taking longer than expected..."
+                echo "💡 You can check progress with: tail -f ~/.cache/sglang/server.log"
+                echo "💡 Or manually start demo later with: cd WebDancer/scripts && bash run_demo.sh"
+                break
+            fi
+            echo "   Waiting... ($i/30)"
+            sleep 10
+        done
+        
+        # Start demo
+        echo "🎯 Starting WebDancer demo..."
+        cd WebDancer/scripts
+        bash run_demo.sh
+        ;;
+    2)
+        echo "🎯 Starting WebDancer demo only..."
+        echo "⚠️  Make sure model server is running on port 30000"
+        cd WebDancer/scripts
+        bash run_demo.sh
+        ;;
+    3)
+        echo "✅ Setup complete! Manual deployment options:"
+        echo ""
+        echo "🔧 Deploy model server:"
+        echo "   ./runpod_deploy.sh deploy"
+        echo ""
+        echo "🎯 Run WebDancer demo:"
+        echo "   cd WebDancer/scripts && bash run_demo.sh"
+        echo ""
+        echo "🏆 Full deployment (recommended):"
+        echo "   ./runpod_deploy.sh deploy && cd WebDancer/scripts && bash run_demo.sh"
+        ;;
+    *)
+        echo "❌ Invalid option. Setup complete."
+        echo "💡 Run './runpod_deploy.sh deploy' to deploy the model server"
+        ;;
+esac
